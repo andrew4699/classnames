@@ -7,9 +7,12 @@ import (
 // Map of class names to whether they should be included or not
 type Map = map[string]bool
 
+// Aliases
+var B = Build
+
 // Takes any number of (arrays of) strings and class name maps
 // Returns an HTML class="..." attribute string
-func Classnames(args ...interface{}) string {
+func Build(args ...interface{}) string {
 	var builder strings.Builder
 	modArgCount := len(args) - 1
 
@@ -35,7 +38,7 @@ func Classnames(args ...interface{}) string {
 				}
 			}
 		case []interface{}: // Recurse on all elements of the array
-			builder.WriteString(Classnames(v...))
+			builder.WriteString(Build(v...))
 			continue
 		default: // Unsupported type
 			continue

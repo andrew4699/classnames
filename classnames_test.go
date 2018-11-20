@@ -61,7 +61,7 @@ func equalsPermutation(str string, list *[]string) bool {
 }
 
 func TestEmpty(t *testing.T) {
-	result := classnames.Classnames()
+	result := classnames.Build()
 	invariant(t, result)
 
 	if result != "" {
@@ -70,7 +70,7 @@ func TestEmpty(t *testing.T) {
 }
 
 func TestEmptyArr(t *testing.T) {
-	result := classnames.Classnames([]string{})
+	result := classnames.Build([]string{})
 	invariant(t, result)
 
 	if result != "" {
@@ -80,7 +80,7 @@ func TestEmptyArr(t *testing.T) {
 
 func TestSingle(t *testing.T) {
 	c := "class-a"
-	result := classnames.Classnames(c)
+	result := classnames.Build(c)
 	invariant(t, result)
 
 	if result != c {
@@ -95,7 +95,7 @@ func TestMany(t *testing.T) {
 	d := "class-d"
 	e := "class-e"
 	f := "class-f"
-	result := classnames.Classnames(a, b, c, d, e, f)
+	result := classnames.Build(a, b, c, d, e, f)
 	invariant(t, result)
 
 	if result != (a + " " + b + " " + c + " " + d + " " + e + " " + f) {
@@ -105,7 +105,7 @@ func TestMany(t *testing.T) {
 
 func TestSingleArr(t *testing.T) {
 	c := "class-a"
-	result := classnames.Classnames([]string{c})
+	result := classnames.Build([]string{c})
 	invariant(t, result)
 
 	if result != c {
@@ -120,7 +120,7 @@ func TestManyArr(t *testing.T) {
 	d := "class-d"
 	e := "class-e"
 	f := "class-f"
-	result := classnames.Classnames([]string{a, b, c, d, e, f})
+	result := classnames.Build([]string{a, b, c, d, e, f})
 	invariant(t, result)
 
 	if result != (a + " " + b + " " + c + " " + d + " " + e + " " + f) {
@@ -131,7 +131,7 @@ func TestManyArr(t *testing.T) {
 func TestSingleArrStrCombo(t *testing.T) {
 	b := "class-b"
 	c := "class-c"
-	result := classnames.Classnames(b, []string{c})
+	result := classnames.Build(b, []string{c})
 	invariant(t, result)
 
 	if result != (b + " " + c) {
@@ -146,7 +146,7 @@ func TestManyArrStrCombo(t *testing.T) {
 	d := "class-d"
 	e := "class-e"
 	f := "class-f"
-	result := classnames.Classnames(a, b, []string{c, d, e}, f)
+	result := classnames.Build(a, b, []string{c, d, e}, f)
 	invariant(t, result)
 
 	if result != (a + " " + b + " " + c + " " + d + " " + e + " " + f) {
@@ -165,7 +165,7 @@ func TestManyBadValues(t *testing.T) {
 	arr = append(arr, c)
 	arr = append(arr, e)
 	arr = append(arr, d)
-	result := classnames.Classnames(a, b, arr, f)
+	result := classnames.Build(a, b, arr, f)
 	invariant(t, result)
 
 	if result != (a + " " + c + " " + f) {
@@ -180,14 +180,15 @@ func TestMap(t *testing.T) {
 	d := "class-d"
 	e := "class-e"
 	f := "class-f"
-	myMap := make(classnames.Map)
-	myMap[a] = true
-	myMap[b] = false
-	myMap[c] = false
-	myMap[d] = true
-	myMap[e] = true
-	myMap[f] = false
-	result := classnames.Classnames(myMap)
+	myMap := classnames.Map{
+		a: true,
+		b: false,
+		c: false,
+		d: true,
+		e: true,
+		f: false,
+	}
+	result := classnames.Build(myMap)
 	invariant(t, result)
 
 	if result != (a+" "+d+" "+e) &&
